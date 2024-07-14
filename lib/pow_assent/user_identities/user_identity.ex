@@ -1,4 +1,7 @@
 defmodule PowAssent.UserIdentities.UserIdentity do
+  @moduledoc """
+  PowAssent user identity schema.
+  """
   use Ecto.Schema
   use PowAssent.Ecto.UserIdentities.Schema, user: PowAssent.Users.User
 

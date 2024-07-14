@@ -1,4 +1,7 @@
 defmodule PowAssent.Users.User do
+  @moduledoc """
+  Pow user schema.
+  """
   use Ecto.Schema
   use Pow.Ecto.Schema
 
