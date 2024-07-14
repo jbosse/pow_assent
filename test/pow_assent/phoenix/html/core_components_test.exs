@@ -41,7 +41,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
 
     expected = fn assigns ->
       ~H"""
-      <.link navigate={"/auth/test_provider"} method="delete">
+      <.link href={"/auth/test_provider"} method="delete">
         Remove Test provider authentication
       </.link><.link navigate={"/auth/other_provider/new"}>
         Sign in with Other provider
@@ -50,7 +50,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "provider_links/1 with slot assigns", %{conn: conn} do
@@ -66,7 +66,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
 
     expected = fn assigns ->
       ~H"""
-      <.link navigate={"/auth/test_provider"} method="delete" class="deauth">
+      <.link href={"/auth/test_provider"} method="delete" class="deauth">
         Remove Test provider authentication
       </.link><.link navigate={"/auth/other_provider/new"} class="auth">
         Sign in with Other provider
@@ -75,7 +75,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "provider_links/1 with slot inner block", %{conn: conn} do
@@ -91,7 +91,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
 
     expected = fn assigns ->
       ~H"""
-      <.link navigate={"/auth/test_provider"} method="delete">
+      <.link href={"/auth/test_provider"} method="delete">
         Deauthorization
       </.link><.link navigate={"/auth/other_provider/new"}>
         Authorization
@@ -100,7 +100,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "provider_links/1 with request_path", %{conn: conn} do
@@ -114,7 +114,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
 
     expected = fn assigns ->
       ~H"""
-      <.link navigate={"/auth/test_provider"} method="delete">
+      <.link href={"/auth/test_provider"} method="delete">
         Remove Test provider authentication
       </.link><.link navigate={"/auth/other_provider/new?request_path=%2Fcustom-url"}>
         Sign in with Other provider
@@ -123,11 +123,14 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "provider_links/1 with invited_user", %{conn: conn} do
-    conn = Conn.assign(conn, :invited_user, %PowAssent.Test.Invitation.Users.User{invitation_token: "token"})
+    conn =
+      Conn.assign(conn, :invited_user, %PowAssent.Test.Invitation.Users.User{
+        invitation_token: "token"
+      })
 
     template = fn assigns ->
       ~H"""
@@ -137,7 +140,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
 
     expected = fn assigns ->
       ~H"""
-      <.link navigate={"/auth/test_provider"} method="delete">
+      <.link href={"/auth/test_provider"} method="delete">
         Remove Test provider authentication
       </.link><.link navigate={"/auth/other_provider/new?invitation_token=token"}>
         Sign in with Other provider
@@ -146,7 +149,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "authorization_link/1 with assigns", %{conn: conn} do
@@ -163,11 +166,11 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "authorization_link/1 with inner block", %{conn: conn} do
-   template = fn assigns ->
+    template = fn assigns ->
       ~H"""
       <CoreComponents.authorization_link conn={@conn} provider="my_provider">
         Authorize
@@ -184,7 +187,7 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "deauthorization_link/1 with assigns", %{conn: conn} do
@@ -196,16 +199,16 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
 
     expected = fn assigns ->
       ~H"""
-      <.link navigate={"/auth/my_provider"} class="example">Remove My provider authentication</.link>
+      <.link href={"/auth/my_provider"} method="delete" class="example">Remove My provider authentication</.link>
       """
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 
   test "deauthorization_link/1 with inner block", %{conn: conn} do
-   template = fn assigns ->
+    template = fn assigns ->
       ~H"""
       <CoreComponents.deauthorization_link conn={@conn} provider="my_provider">
         Deauthorize
@@ -215,13 +218,13 @@ defmodule PowAssent.Phoenix.HTML.CoreComponentsTest do
 
     expected = fn assigns ->
       ~H"""
-      <.link navigate={"/auth/my_provider"}>
+      <.link href={"/auth/my_provider"} method="delete">
         Deauthorize
       </.link>
       """
     end
 
     assert render_component(&template.(&1), %{conn: conn}) ==
-      render_component(&expected.(&1))
+             render_component(&expected.(&1))
   end
 end
